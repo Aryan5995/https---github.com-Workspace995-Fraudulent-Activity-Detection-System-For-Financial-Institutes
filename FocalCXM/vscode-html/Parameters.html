@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website</title>
+    <link rel="stylesheet" href="css/style3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <style>
+        /* Modal Content Styling */
+        .modal-unique {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content-unique {
+            color: black;
+            background-color: #f4f4f4;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 50%;
+            max-width: 600px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input and Select Field Styling */
+        .modal-content-unique input[type="text"],
+        .modal-content-unique select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        /* Label Styling */
+        .modal-content-unique label {
+            margin-top: 10px;
+            font-weight: bold;
+            display: block;
+            color: #333;
+        }
+
+        /* Button Styling */
+        .modal-content-unique button {
+            background-color: #0C375A;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Styling the Add Condition Button */
+        .add-condition-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .add-condition-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Ensure that the form looks well-aligned */
+        .condition-div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .condition-div select,
+        .condition-div input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .condition-div label {
+            flex: 0.5;
+            margin-right: 10px;
+        }
+
+        #addFeatureBtn {
+            width: 100%;
+        }
+
+       /* Information Icon Styling */
+.info-icon {
+    
+    margin-left: 8px;
+    color: #333; /* Neutral, professional color */
+    cursor: pointer;
+    position: relative;
+    font-size: 14px; /* Smaller, more subtle size */
+}
+
+.info-icon:hover {
+    color: #0C375A; /* Dark blue color for hover, matching corporate theme */
+}
+
+/* Tooltip Container */
+.tooltip-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: absolute;
+    top: 110%; /* Positioned slightly below the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff; /* White background for a clean look */
+    color: #333; /* Dark text color */
+    padding: 8px 12px; /* Adequate padding for readability */
+    border-radius: 6px;
+    font-size: 16px; /* Slightly smaller font size for a discreet tooltip */
+    line-height: 1.4;
+    white-space: normal; /* Allow wrapping for better readability */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
+    z-index: 10;
+    display: none; /* Hidden by default */
+    min-width: 200px; /* Minimum width to make text readable */
+    max-width: 300px; /* Maximum width to prevent overly wide tooltips */
+    text-align: left; /* Left-align text for a formal look */
+    border: 1px solid #ccc; /* Light border to define the tooltip */
+}
+
+.tooltip-container::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent; /* Arrow pointing upwards with matching background */
+}
+
+.info-icon:hover .tooltip-container {
+    display: block; /* Show tooltip on hover */
+}
+
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="navbar-brand">
+            <a href="#">
+                <img src="images/focal_final.png" class="sidebar-logo" alt="Logo">
+            </a>
+        </div>
+        <nav class="header-nav">
+            <a href="#" class="rules-engine-link">Rules Engine</a>
+            <form class="search-container">
+                <input type="text" id="search-bar" placeholder="Search Here...">
+                <button type="submit" class="search-icon-button">
+                    <i class="fa fa-search search-icon"></i>
+                </button>
+            </form>
+            <button class="add-flag" id="addFlagBtnUnique">Add Feature +</button>
+        </nav>
+        <div class="profile-cont">
+            <div class="name" id="userProfileName"></div>
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+        </div>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="index.html"><i class="fa-solid fa-house"></i>Home</a></li>
+                <li><a href="#"><i class="fa-solid fa-user"></i>Account</a></li>
+                <li><a href="Support.html"><i class="fa-solid fa-bell"></i>Support</a></li>
+                <li><a href="#"><i class="fa-solid fa-gear"></i>Settings</a></li>
+                <li><a href="parameters.html"><i class="fa-solid fa-sliders"></i>Features</a></li>
+                <li><a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log out</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <main class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Feature</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamically populated content will go here -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <a href="risk.html"><button id="submit">Submit</button></a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </main>
+        </div>
+    </div>
+    <div id="addFlagModalUnique" class="modal-unique">
+        <div class="modal-content-unique">
+            <span class="close-unique" id="addFlagCloseUnique">&times;</span>
+            <form id="addFlagFormUnique">
+                <h3>Add Feature</h3>
+
+                <label for="featureNameUnique">Feature Name</label>
+                <input type="text" placeholder="Feature name" id="featureNameUnique" name="featureName" required>
+                <label for="featureNameUnique">Description</label>
+                <input type="text" placeholder="Feature's Description"  required>
+
+                <label for="validationTypeUnique">Validation Type</label>
+                <select id="validationTypeUnique" name="validationType" required>
+                    <option value="" disabled selected>Select Validation Type</option>
+                    <option value="Boolean">Boolean</option>
+                    <option value="Number">Number</option>
+                </select>
+
+                <div id="conditionContainer"></div>
+
+                <button type="button" id="addFeatureBtn">Add Feature</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const featureConditions = {
+                "Credit Score": "A numerical representation of a person's creditworthiness, based on credit history.",
+                "Debt to Income Ratio": "The percentage of a person's monthly income that goes towards paying debts, indicating financial stability.",
+                "Using Multiple Alliances": "Engaging with multiple financial partners or institutions, potentially indicating complex financial behavior.",
+                "Involved in Money Laundering": "Suspicion or evidence of participation in illegal money laundering activities.",
+                "Gross Income": "The total earnings of an individual before taxes and other deductions.",
+                "History of Defaulting Loans": "A track record of failing to repay loans on time, which could indicate financial unreliability.",
+                "Criminal Activity": "Any involvement in illegal activities, which may be linked to fraudulent behavior.",
+                "Suspicious Behavior": "Actions or transactions that deviate from normal patterns and may indicate fraud or illegal activities.",
+                "Unverified Employment": "Employment details that cannot be confirmed or are inconsistent, raising concerns about income legitimacy.",
+                "Is Defaulter": "An individual who has failed to meet debt obligations, marking them as a credit risk.",
+                "Frequent Address Changes": "Regularly changing residential addresses, potentially signaling instability or efforts to avoid detection.",
+                "Multiple Credit Card Applications": "Submitting numerous credit card applications within a short period, which may indicate financial distress or fraudulent intent.",
+                "High Transaction Volume": "A large number of transactions processed within a specific time frame, potentially signaling abnormal financial activity.",
+                "Unusual IP Address Usage": "Accessing accounts or performing transactions from atypical or suspicious IP addresses, possibly indicating fraudulent activity.",
+                "Frequent Loan Applications": "Regularly applying for loans, which could suggest financial instability or an attempt to secure funds through multiple sources.",
+                "Unusual Large Transactions": "Conducting transactions that are significantly larger than usual, possibly indicating money laundering or other illicit activities."
+            };
+        
+            // Function to fetch features and update the table
+            function fetchFeatures() {
+                fetch('your api')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch features');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const features = data.body.all_features;
+                        const tbody = document.querySelector('table tbody');
+                        tbody.innerHTML = ''; // Clear existing table rows
+        
+                        features.forEach((feature, index) => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${index + 1}</td>
+                                <td>
+                                    ${feature}
+                                    <i class="fa fa-info-circle info-icon" data-feature="${feature}">
+                                        <div class="tooltip-container">
+                                            ${featureConditions[feature] || feature}
+                                        </div>
+                                    </i>
+                                </td>
+                                <td><div class="status disabled">Disabled</div></td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" data-feature-index="${index}">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+        
+                        // Add event listeners for the toggles
+                        const toggleInputs = document.querySelectorAll('input[type="checkbox"]');
+                        toggleInputs.forEach(input => {
+                            input.addEventListener('change', function () {
+                                const featureIndex = this.getAttribute('data-feature-index');
+                                const statusDiv = this.closest('tr').querySelector('.status');
+                                if (this.checked) {
+                                    statusDiv.classList.remove('disabled');
+                                    statusDiv.classList.add('active');
+                                    statusDiv.textContent = 'Active';
+                                } else {
+                                    statusDiv.classList.remove('active');
+                                    statusDiv.classList.add('disabled');
+                                    statusDiv.textContent = 'Disabled';
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => console.error('Error fetching features:', error));
+            }
+            // Call the function on page load
+            fetchFeatures();
+
+            // Modal and form logic
+            const addFlagBtn = document.getElementById('addFlagBtnUnique');
+            const addFlagModal = document.getElementById('addFlagModalUnique');
+            const addFlagClose = document.getElementById('addFlagCloseUnique');
+            const validationTypeSelect = document.getElementById('validationTypeUnique');
+            const conditionContainer = document.getElementById('conditionContainer');
+            let conditionCount = 0;
+
+            addFlagBtn.addEventListener('click', () => {
+                addFlagModal.style.display = 'block';
+            });
+
+            addFlagClose.addEventListener('click', () => {
+                addFlagModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == addFlagModal) {
+                    addFlagModal.style.display = 'none';
+                }
+            });
+
+            validationTypeSelect.addEventListener('change', function () {
+                const selectedType = validationTypeSelect.value;
+                conditionContainer.innerHTML = ''; // Clear any existing conditions
+                conditionCount = 0; // Reset condition count
+
+                // Add the first condition input
+                addConditionInput(selectedType);
+            });
+
+            function addConditionInput(type) {
+                conditionCount++;
+
+                const conditionDiv = document.createElement('div');
+                conditionDiv.classList.add('condition-div');
+                conditionDiv.id = `conditionDiv${conditionCount}`;
+
+                const comparisonLabel = document.createElement('label');
+                comparisonLabel.innerText = 'Comparison Operator';
+                conditionDiv.appendChild(comparisonLabel);
+
+                const comparisonSelect = document.createElement('select');
+                comparisonSelect.name = `comparison_operator${conditionCount}`;
+                comparisonSelect.required = true;
+
+                let operators = [];
+                let placeholderText = ''; // Placeholder text based on the type
+
+                if (type === 'Boolean') {
+                    operators = ['equals', 'not equals'];
+                    placeholderText = 'Enter true/false';
+                } else if (type === 'Number') {
+                    operators = ['equals', 'greater than', 'less than', 'greater than or equal to', 'less than or equal to'];
+                    placeholderText = 'Enter a number';
+                }
+
+                operators.forEach(op => {
+                    const option = document.createElement('option');
+                    option.value = op;
+                    option.text = op;
+                    comparisonSelect.appendChild(option);
+                });
+                conditionDiv.appendChild(comparisonSelect);
+
+                const valueLabel = document.createElement('label');
+                valueLabel.innerText = 'Value';
+                conditionDiv.appendChild(valueLabel);
+
+                const valueInput = document.createElement('input');
+                valueInput.type = 'text';
+                valueInput.name = `value${conditionCount}`;
+                valueInput.placeholder = placeholderText; // Set the placeholder based on type
+                valueInput.required = true;
+                conditionDiv.appendChild(valueInput);
+
+                // Add "+" button to add more conditions
+                const addButton = document.createElement('button');
+                addButton.type = 'button';
+                addButton.innerText = '+';
+                addButton.classList.add('add-condition-btn');
+                addButton.addEventListener('click', function () {
+                    addConditionInput(type);
+                });
+                conditionDiv.appendChild(addButton);
+
+                conditionContainer.appendChild(conditionDiv);
+            }
+
+            document.getElementById('addFeatureBtn').addEventListener('click', function () {
+                const featureName = document.getElementById('featureNameUnique').value;
+                const validationType = document.getElementById('validationTypeUnique').value;
+
+                const validationValue = [];
+                for (let i = 1; i <= conditionCount; i++) {
+                    const comparisonOperator = document.querySelector(`[name="comparison_operator${i}"]`).value;
+                    const value = document.querySelector(`[name="value${i}"]`).value;
+
+                    validationValue.push({
+                        comparison_operator: comparisonOperator,
+                        value: validationType === 'Boolean' ? (value.toLowerCase() === 'true') : parseFloat(value)
+                    });
+                }
+
+                const requestData = {
+                    feature_name: featureName,
+                    validation_type: validationType,
+                    validation_value: validationValue.length > 1 ? validationValue : validationValue[0]
+                };
+
+                console.log('Request Data:', JSON.stringify(requestData));
+
+                // Sending the data to the provided API
+                fetch('https://kdse7p2g1d.execute-api.us-east-1.amazonaws.com/dev/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to add feature');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                        document.getElementById('addFlagModalUnique').style.display = 'none';
+                        fetchFeatures(); // Refresh the feature list after adding a new feature
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+
+           
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username'); // Retrieve the username from local storage
+            if (username) {
+              document.getElementById('userProfileName').textContent = username;
+            } else {
+              window.location.href = 'index.html'; // Redirect to login if no username is found
+            }
+          });
+    </script>
+</body>
+
+</html>

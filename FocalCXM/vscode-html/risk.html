@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="images/fevicon.png" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/responsive.css" rel="stylesheet" />
+  
+</head>
+
+<body class="sub_page">
+  <div class="top-bar">
+    <div class="contact-info">
+      <i class="fas fa-phone-alt"></i>
+      <span class="phone-number">+91 703.868.6393</span>
+    </div>
+    <div class="contact-info">
+      <i class="fas fa-envelope"></i>
+      <span class="email">contact@focalcxm.com</span>
+    </div>
+  </div>
+
+  <div class="hero_area">
+    <header class="header_section long_section px-0">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="Parameters.html">
+          <span>
+            <img src="images/focalcxm.png">
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Support.html">Support</a>
+              </li>
+            </ul>
+          </div>
+          <div class="quote_btn-container">
+            <a href="index.html">
+              <span id="userProfileName">
+                
+              </span>
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <section class="about_section layout_padding long_section">
+    <div class="container">
+      <div class="form-container">
+        <label> <b>Customer ID:</b> <input type="text" id="customerID" placeholder="Enter Customer ID"></label>
+        <button type="button" class="main-button" onclick="fetchCustomerDetails()">Calculate Risk</button>
+      </div>
+      <div class="box" id="detailsBox">
+        <div class="details">
+          <div id="customerDetails">
+            <!-- Customer details will appear here -->
+          </div>
+          <div class="risk-indicator" id="riskIndicator">
+            <h3><u>Risk Indicator</u></h3>
+            <div class="risk-box risk-level-box" id="riskLevelBox">
+              <h4><u>Risk Level</u></h4>
+             <center> <div id="riskLevelText"></div></center>
+            </div>
+            <div class="risk-box">
+              <h4><u>Risk Meter</u></h4>
+              <div class="risk-meter-container">
+                <div id="riskMeter" class="risk-meter"></div>
+                <div class="risk-labels">
+                  <span>Low</span>
+                  <span>Medium</span>
+                  <span>High</span>
+                </div>
+              </div>
+            </div>
+            <div class="risk-box loan-box">
+              <h4><u></u></h4>
+              <center>  <div id="loanStatusText"></div></center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="info_section">
+    <div class="contact_nav">
+        <div class="contact_item">
+            <i class="fas fa-phone-alt"></i>
+            <p>Call: <span>+91 703.868.6393</span></p>
+        </div>
+        <div class="contact_item">
+            <i class="fas fa-envelope"></i>
+            <p>Email: contact@focalcxm.com</p>
+        </div>
+        <div class="contact_item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Location</p>
+        </div>
+    </div>
+    <div class="info_form">
+        <h4>Contact for Support</h4>
+        <form>
+            <input type="email" placeholder="Enter Your Email" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="social_box">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</div>
+
+ 
+
+  
+  <script  src="js/customers.js"></script>
+  <!-- <script  src="js/script1.js"></script> -->
+
+  <script>
+    function fetchCustomerDetails() {
+    const customerID = document.getElementById('customerID').value.trim();
+    console.log('Customer ID entered:', customerID);
+    console.log('Customers array:', customers); // Check if the array is loaded correctly
+
+    const customer = customers.find(c => c.id === customerID);
+    console.log('Matching customer:', customer);
+
+    if (customer) {
+        console.log('Customer found:', customer);
+        displayCustomerDetails(customer);
+        sendToBackend(customer);
+        document.getElementById('detailsBox').classList.add('show');
+    } else {
+        alert('Please enter a valid Customer ID');
+        console.log('Customer not found:', customerID);
+    }
+}
+
+function displayCustomerDetails(customer) {
+    const detailsDiv = document.getElementById('customerDetails');
+    detailsDiv.innerHTML = `
+        <h3>Customer Details</h3>
+        <p><b>Gross Income:</b> ${customer.grossIncome}</p>
+        <p><b>Employment Status:</b> ${customer.employmentStatus}</p>
+        <p><b>Credit Score:</b> ${customer.creditScore}</p>
+        <p><b>Total Monthly Debt Payments:</b> ${customer.totalMonthlyDebtPayments}</p>
+        <p><b>Total Monthly Income:</b> ${customer.totalMonthlyIncome}</p>
+        <p><b>Debt-to-Income Ratio:</b> ${customer.debtToIncomeRatio}</p>
+        <p><b>History of Defaulting Loans:</b> ${customer.historyOfDefaultingLoans}</p>
+        <p><b>Criminal Activity:</b> ${customer.criminalActivity}</p>
+        <p><b>Suspicious Behavior:</b> ${customer.suspiciousBehavior}</p>
+        <p><b>Unverified Employment:</b> ${customer.unverifiedEmployment}</p>
+        <p><b>Is Defaulter:</b> ${customer.isDefaulter}</p>
+        <p><b>Frequent Address Changes:</b> ${customer.frequentAddressChanges}</p>
+        <p><b>Involved in Money Laundering:</b> ${customer.involvedInMoneyLaundering}</p>
+        <p><b>Using Multiple Alliances:</b> ${customer.usingMultipleAlliances}</p>
+    `;
+}
+
+
+async function sendToBackend(customer) {
+    const requestBody = {
+        fraudDetection: {
+            creditScore: customer.creditScore,
+            debtToIncomeRatio: Number(customer.debtToIncomeRatio),
+            historyOfDefaultingLoans: customer.historyOfDefaultingLoans,
+            criminalActivity: customer.criminalActivity,
+            suspiciousBehaviour: customer.suspiciousBehavior,
+            detectedIdentityTheft: customer.detectedIdentityTheft || "No",
+            unverifiedEmployment: customer.unverifiedEmployment,
+            frequentAddressChanges: customer.frequentAddressChanges,
+            involvedinMoneyLaundering: customer.involvedInMoneyLaundering,
+            usingMultipleAlliances: customer.usingMultipleAlliances
+        }
+    };
+
+    try {
+        const response = await fetch('your api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody),
+            mode: 'cors'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Full response data:', data); // Log the full response
+
+        // Access the riskLevel from the response
+        if (data && data.response && data.response.fraudDetection) {
+            const riskLevel = data.response.fraudDetection.riskLevel;
+            displayRiskIndicator(riskLevel);
+        } else {
+            throw new Error('Unexpected response format');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`Error: ${error.message}`);
+    }
+}
+
+function displayRiskIndicator(riskLevel) {
+    let riskClass = '';
+    let riskMeterWidth = 0;
+    let loanStatus = '';
+
+    if (riskLevel.includes('High Risk')) {
+        riskClass = 'high-risk';
+        riskMeterWidth = 100;
+        loanStatus = 'Deny';
+    } else if (riskLevel.includes('Medium Risk')) {
+        riskClass = 'medium-risk';
+        riskMeterWidth = 50;
+        loanStatus = 'Further Evaluation Needed';
+    } else {
+        riskClass = 'low-risk';
+        riskMeterWidth = 10;
+        loanStatus = 'Accept';
+    }
+
+    document.getElementById('riskLevelText').innerText = riskLevel;
+    document.getElementById('riskLevelBox').className = `risk-box risk-level-box ${riskClass}`;
+    document.getElementById('riskMeter').style.width = `${riskMeterWidth}%`;
+    document.getElementById('riskMeter').className = `risk-meter ${riskClass}`;
+    document.getElementById('loanStatusText').innerText = loanStatus;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const calculateRiskButton = document.getElementById('calculateRiskButton');
+    const userProfileName = document.getElementById('userProfileName');
+    
+    // Ensure the button and userProfileName elements are found
+    if (calculateRiskButton) {
+        calculateRiskButton.onclick = fetchCustomerDetails;
+    }
+
+    if (userProfileName) {
+        const username = localStorage.getItem('username');
+        if (username) {
+            userProfileName.textContent = username;
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+        const username = localStorage.getItem('username'); // Retrieve the username from local storage
+        if (username) {
+          document.getElementById('userProfileName').textContent = username;
+        } else {
+          window.location.href = 'index.html'; // Redirect to login if no username is found
+        }
+      });
+  </script>
+    
+  
+</body>
+
+</html>
